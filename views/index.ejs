@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Weather App</title>
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&display=swap" rel="stylesheet">
-  <link href="site.css" rel="stylesheet">
+  <link href="styles.css" rel="stylesheet">
 </head>
 <body>
 
@@ -26,20 +26,43 @@
         
         <% } else { %>
           <div class="location-and-date">
-            <h1 class="location-and-date__location"><%= data.city.name %></h1>
+            <h1 class="location-and-date_location"><%= data.city.name %></h1>
             <div><%= date %></div>
           </div>
 
           <div class="current-temperature">
-            <div class="current-temperature__icon-container">
-              <!-- <img src="icons/mostly-sunny.svg" class="current-temperature__icon" alt=""> -->
-              <%- data.list[0].weather[0].icon %>
+            <div class="current-temperature_icon-container">
+              <img src="icons/day.svg" class="current-temperature_icon" alt="">
+              <!-- <%- data.list[0].weather[0].icon %> -->
             </div>
-            <div class="current-temperature__content-container">
-              <div class="current-temperature__value"><%= data.list[0].temp.day %>&deg;</div>
-              <div class="current-temperature__summary"><%= data.list[0].weather[0].description %></div>
+            <div class="current-temperature_content-container">
+              <div class="current-temperature_value"><%= Math.round(data.list[0].temp.day) %>&deg;</div>
+              <div class="current-temperature_summary"><%= data.list[0].weather[0].description %></div>
             </div>
           </div>
+
+          <div class="current-stats">
+            <div>
+              <div class="current-stats_value"><%= Math.round(data.list[0].temp.max) %>&deg;</div>
+              <div class="current-stats_label">High</div>
+              <div class="current-stats_value"><%= Math.round(data.list[0].temp.min) %>&deg;</div>
+              <div class="current-stats_label">Low</div>
+            </div>
+            <div>
+              <div class="current-stats_value"><%= Math.round(data.list[0].speed)%>mph</div>
+              <div class="current-stats_label">Wind</div>
+              <div class="current-stats_value"><%= data.list[0].pop * 100 %>%</div>
+              <div class="current-stats_label">Rain</div>
+            </div>
+            <div>
+              <div class="current-stats_value">05:27</div>
+              <div class="current-stats_label">Sunrise</div>
+              <div class="current-stats_value">20:57</div>
+              <div class="current-stats_label">Sunset</div>
+            </div>
+          </div>
+
+          
     <% } %>
   </main>
 </body>

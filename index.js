@@ -49,6 +49,6 @@ app.post('/', (req, res) => {
 
 
 app.listen(3000, function() {
-    console.log('Example app')
+    console.log('Running Weather app')
 
 })

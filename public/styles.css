@@ -13,4 +13,104 @@ body {
     background-attachment: fixed;
   }
 
+  @media screen and (min-width: 700px) {
+    body {
+      margin: 20px;
+    }
+  }
   
+  .main-container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  @media screen and (min-width: 920px) {
+    .main-container {
+      width: 880px;
+      margin: 8px auto;
+      font-size: 1.1em;
+    }
+  }
+
+
+  /* location-and-date */
+.location-and-date {
+  width: 100%;
+}
+
+.location-and-date_location {
+  margin: 0;
+  font-size: 2em;
+  font-weight: 600;
+}
+
+
+/* current-temperature */
+.current-temperature {
+  display: flex;
+  margin-top: 0.25em;
+  width: 100%;
+}
+
+.current-temperature_icon-container {
+  flex-grow: 1.25;
+  text-align: center;
+}
+
+.current-temperature_content-container {
+  flex-grow: 1;
+  text-align: center;
+}
+
+.current-temperature_icon {
+  width: 10.5em;
+}
+
+.current-temperature_value {
+  font-size: 5.25em;
+  font-weight: 300;
+}
+
+.current-temperature_summary {
+  margin-top: -0.5em;
+  margin-left: -0.6em;
+  text-align: center;
+  font-size: 1.125em;
+}
+
+
+/* current-stats */
+.current-stats {
+  display: flex;
+  justify-content: space-around;
+  padding-bottom: 1em;
+  width: 100%;
+  border-top: 1px solid rgba(255,255,255,0.5);
+  border-bottom: 1px solid rgba(255,255,255,0.5);
+}
+
+@media screen and (min-width: 700px) {
+  .current-stats {
+    margin-bottom: 1em;
+    padding-bottom: 0;
+    border-top: none;
+    border-bottom: none;
+    border-left: 1px solid rgba(255,255,255,0.5);
+  }
+}
+
+.current-stats_value {
+  margin-top: 1em;
+  font-size: 1.44em;
+}
+
+.current-stats_label {
+  color: rgba(255,255,255,0.6);
+}
+
+@media screen and (min-width: 700px) {
+  .current-temperature,
+  .current-stats {
+    width: 50%;
+  }
+}
