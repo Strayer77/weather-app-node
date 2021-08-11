@@ -35,7 +35,11 @@ app.post('/', (req, res) => {
         if (response.statusCode === 200) {
             response.on("data", (data) => {
                 const locationData = JSON.parse(data);
-                
+              
+                for (var i=0; i < locationData['list'].length; i++) {
+                    locationData['list'][i]['sunrise'] = convertUnixTimeStamp(locationData['list'][i]['sunrise'])
+                    locationData['list'][i]['sunset'] = convertUnixTimeStamp(locationData['list'][i]['sunset'])
+                }
                 res.render('index', {data: locationData, date: date});
             })
             
@@ -47,6 +51,15 @@ app.post('/', (req, res) => {
     
 })
 
+// this function takes the timestamps output by the weather
+// api and converts them to readable dates
+function convertUnixTimeStamp(timestamp) {
+    var new_date = new Date(timestamp * 1000);
+    var hour = new_date.getHours();
+    var min = new_date.getMinutes();
+
+    return hour + ':' + min
+}
 
 app.listen(3000, function() {
     console.log('Running Weather app')
