@@ -1,0 +1,29 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Weather App</title>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&display=swap" rel="stylesheet">
+  <link href="site.css" rel="stylesheet">
+</head>
+<body>
+  <% if (data === '') { %>
+    <form action="/" method="post">
+      <div class="form-group">
+        <input type="text" class="form-control" name="location" placeholder="Location" id="search-txt">
+      </div>
+      <button type="submit" >Search</button>
+    </form>
+    <% } else if (data === '0') { %>
+      <div>
+        <p>Location not found.</p>
+      </div>
+      <% } else { %>
+        <div>
+          <p><% data %></p>
+        </div>
+  <% } %>
+</body>
+</html>
