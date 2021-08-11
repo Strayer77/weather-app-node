@@ -9,21 +9,38 @@
   <link href="site.css" rel="stylesheet">
 </head>
 <body>
-  <% if (data === '') { %>
+
+  <main class="main-container">
     <form action="/" method="post">
       <div class="form-group">
         <input type="text" class="form-control" name="location" placeholder="Location" id="search-txt">
       </div>
       <button type="submit" >Search</button>
     </form>
-    <% } else if (data === '0') { %>
-      <div>
-        <p>Location not found.</p>
-      </div>
-      <% } else { %>
+    <% if (data === '') { %>
+      
+      <% } else if (data === '0') { %>
         <div>
-          <p><% data %></p>
+          <p>Location not found.</p>
         </div>
-  <% } %>
+        
+        <% } else { %>
+          <div class="location-and-date">
+            <h1 class="location-and-date__location"><%= data.city.name %></h1>
+            <div><%= date %></div>
+          </div>
+
+          <div class="current-temperature">
+            <div class="current-temperature__icon-container">
+              <!-- <img src="icons/mostly-sunny.svg" class="current-temperature__icon" alt=""> -->
+              <%- data.list[0].weather[0].icon %>
+            </div>
+            <div class="current-temperature__content-container">
+              <div class="current-temperature__value"><%= data.list[0].temp.day %>&deg;</div>
+              <div class="current-temperature__summary"><%= data.list[0].weather[0].description %></div>
+            </div>
+          </div>
+    <% } %>
+  </main>
 </body>
 </html>

@@ -25,14 +25,18 @@ app.post('/', (req, res) => {
     const location = req.body.location
     const apiKey = '6c6e5e0af6715fa27517e424f5b069d2'
     const location_url = "https://api.openweathermap.org/data/2.5/forecast/daily?q="+location+"&units=imperial&cnt=7&appid="+apiKey
-    console.log(location_url)
+
+
+    var today = new Date();
+    var date = (today.getMonth()+1)+'/'+today.getDate()+'/'+today.getFullYear();
+ 
     // location_url = "https://www.metaweather.com/api/location/search/?query=" + location
     https.get(location_url, (response) => {
         if (response.statusCode === 200) {
             response.on("data", (data) => {
                 const locationData = JSON.parse(data);
-                console.log(locationData)
-                res.render('index', {data: locationData});
+                console.log(locationData.list[0].weather)
+                res.render('index', {data: locationData, date: date});
             })
             
         } else {
