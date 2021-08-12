@@ -40,7 +40,7 @@ body {
 
 .location-and-date_location {
   margin: 0;
-  font-size: 2em;
+  font-size: 3em;
   font-weight: 600;
 }
 
@@ -113,4 +113,115 @@ body {
   .current-stats {
     width: 50%;
   }
+}
+
+
+/* forecast */
+.forecast {
+  width: 100%;
+  margin-top: 1em;
+}
+
+.forecast__container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.forecast__row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  margin-bottom: 0.3em;
+  padding: 0.8em 0;
+  width: 100%;
+  border-radius: 5px;
+  background-color: rgba(0,0,0,0.20);
+  font-size: 1.19em;
+  text-align: center;
+}
+
+.forecast__label {
+  color: rgba(255,255,255,0.6);
+  font-size: 0.83em;
+}
+
+.forecast__date,
+.forecast__high,
+.forecast__low,
+.forecast__icon,
+.forecast__rain,
+.forecast__wind {
+  width: 33.33333%;
+  font-size: 0.95em;
+}
+
+.forecast__date,
+.forecast__high,
+.forecast__low {
+  margin-bottom: 0.6em;
+}
+
+@media screen and (min-width: 450px) {
+  .forecast__date,
+  .forecast__high,
+  .forecast__low,
+  .forecast__icon,
+  .forecast__rain,
+  .forecast__wind {
+    width: 16.666666%;
+    margin-bottom: initial;
+  }
+
+  .forecast__date {
+    order: -2;
+  }
+
+  .forecast__icon {
+    order: -1;
+  }
+}
+
+/* search bar */
+.search {
+  width: 100%;
+  position: relative;
+  display: flex;
+}
+
+.searchTerm {
+  width: 100%;
+  border: 3px solid rgb(20,136,204);
+  border-right: none;
+  padding: 5px;
+  height: 36px;
+  border-radius: 5px 0 0 5px;
+  outline: none;
+  color: #9DBFAF;
+}
+
+.searchTerm:focus{
+  color: rgb(20,136,204);
+}
+
+.searchButton {
+  width: 40px;
+  height: 36px;
+  border: 1px solid rgb(20,136,204);
+  background: rgb(20,136,204);
+  text-align: center;
+  color: #fff;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.wrap{
+  padding-top: 3em;
+  display: flex;
+  width: 35%;
+  position: relative;
+  top: 5%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }

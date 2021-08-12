@@ -5,18 +5,25 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Weather App</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&display=swap" rel="stylesheet">
   <link href="styles.css" rel="stylesheet">
 </head>
 <body>
-
+  
+  <form action="/" method="post">
+    <div class="form-group">
+      <div class="wrap">
+        <div class="search">
+           <input type="text" class="searchTerm" placeholder="Enter City Name" id="search-txt" name="location">
+           <button type="submit" class="searchButton">
+             <i class="fa fa-search"></i>
+          </button>
+        </div>
+     </div>
+  </form>
   <main class="main-container">
-    <form action="/" method="post">
-      <div class="form-group">
-        <input type="text" class="form-control" name="location" placeholder="Location" id="search-txt">
-      </div>
-      <button type="submit" >Search</button>
-    </form>
+    
     <% if (data === '') { %>
       
       <% } else if (data === '0') { %>
@@ -27,12 +34,12 @@
         <% } else { %>
           <div class="location-and-date">
             <h1 class="location-and-date_location"><%= data.city.name %></h1>
-            <div><%= date %></div>
+            <div><%= data.list[0].day + ' - ' + date %></div>
           </div>
 
           <div class="current-temperature">
             <div class="current-temperature_icon-container">
-              <img src="icons/day.svg" class="current-temperature_icon" alt="">
+              <img src="<%= 'icons/' + data.list[0].icon %>" class="current-temperature_icon" alt="">
               <!-- <%- data.list[0].weather[0].icon %> -->
             </div>
             <div class="current-temperature_content-container">
@@ -49,9 +56,9 @@
               <div class="current-stats_label">Low</div>
             </div>
             <div>
-              <div class="current-stats_value"><%= Math.round(data.list[0].speed)%>mph</div>
+              <div class="current-stats_value"><%= Math.round(data.list[0].speed) + 'mph ' + data.list[0].deg %></div>
               <div class="current-stats_label">Wind</div>
-              <div class="current-stats_value"><%= data.list[0].pop * 100 %>%</div>
+              <div class="current-stats_value"><%= Math.round(data.list[0].pop * 100) %>%</div>
               <div class="current-stats_label">Rain</div>
             </div>
             <div>
@@ -62,6 +69,45 @@
             </div>
           </div>
 
+          <div class="forecast">
+            <h2 class="forecast__heading">Next 7 days</h2>
+            <div class="forecast__container">
+              <% for (var i=1; i < data.list.length; i++) { %>
+              <div class="forecast__row">
+       
+                <div class="forecast__date">
+                  <%= data.list[i].day %>
+                  <div class="forecast__label"><%= data.list[i].dt %></div>
+                </div>
+       
+                <div class="forecast__low">
+                  <%= Math.round(data.list[i].temp.min) %>&deg;
+                  <div class="forecast__label">Low</div>
+                </div>
+       
+                <div class="forecast__high">
+                  <%= Math.round(data.list[i].temp.max) %>&deg;
+                  <div class="forecast__label">High</div>
+                </div>
+       
+                <div class="forecast__icon">
+                  <img src="<%= 'icons/' + data.list[i].icon %>" alt="Sunny">
+                </div>
+       
+                <div class="forecast__rain">
+                  <%= Math.round(data.list[i].pop * 100) %>%
+                  <div class="forecast__label">Rain</div>
+                </div>
+       
+                <div class="forecast__wind">
+                  <%= Math.round(data.list[i].speed) + 'mph ' + data.list[i].deg %>
+                  <div class="forecast__label">Wind</div>
+                </div>
+       
+              </div>
+              <% } %>
+            </div>
+          </div>
           
     <% } %>
   </main>
