@@ -15,40 +15,41 @@ app.use(bodyParser.urlencoded({
 
 app.use(express.static("public"))
 
-
+const apiKey = '6c6e5e0af6715fa27517e424f5b069d2'
 
 app.get('/', (req, res) => {
-    res.render('index', {data: ''});
+    
+    date = getCurrentDate()
+    home_url = 'https://api.openweathermap.org/data/2.5/forecast/daily?q=Boise&units=imperial&cnt=8&appid=' + apiKey
+    https.get(home_url, (response) => {
+        if (response.statusCode === 200) {
+            response.on("data", (data) => {
+                const homeData = JSON.parse(data);
+                formatted_data = formatData(homeData)
+                res.render('index', {data: '', date: date, homeData: formatted_data});
+            })
+            
+        } else {
+            res.render('index', {data: "0"})
+        }
+    })   
 })
+    
 
 app.post('/', (req, res) => {
     const location = req.body.location
-    const apiKey = '6c6e5e0af6715fa27517e424f5b069d2'
-    const location_url = "https://api.openweathermap.org/data/2.5/forecast/daily?q="+location+"&units=imperial&cnt=8&appid="+apiKey
+    
+    const location_url = "https://api.openweathermap.org/data/2.5/forecast/daily?q="+location+"&units=imperial&cnt=8&appid=" + apiKey
 
-
-    var today = new Date();
-    var date = (today.getMonth()+1)+'/'+today.getDate()+'/'+today.getFullYear();
+    date = getCurrentDate()
  
-    // location_url = "https://www.metaweather.com/api/location/search/?query=" + location
     https.get(location_url, (response) => {
         if (response.statusCode === 200) {
             response.on("data", (data) => {
                 const locationData = JSON.parse(data);
-                
-                for (var i=0; i < locationData['list'].length; i++) {
-                  
-                    var day = retrieveDay(locationData['list'][i]['dt']);
-                    locationData['list'][i]['day'] = day;
-                    var icon = retrieveWeatherIcon(locationData['list'][i]['weather'][0]['main']);
-                    locationData['list'][i]['icon'] = icon
-                    locationData['list'][i]['dt'] = convertUnixTimeStamp(locationData['list'][i]['dt'], '');
-                    locationData['list'][i]['deg'] = degreeToText(locationData['list'][i]['deg']);
-                    locationData['list'][i]['sunrise'] = convertUnixTimeStamp(locationData['list'][i]['sunrise'], 'hours');
-                    locationData['list'][i]['sunset'] = convertUnixTimeStamp(locationData['list'][i]['sunset'], 'hours');
-                
-                }
-                res.render('index', {data: locationData, date: date});
+                formatted_data = formatData(locationData)
+                // console.log(formatted_data)
+                res.render('index', {data: formatted_data, date: date});
             })
             
         } else {
@@ -58,6 +59,29 @@ app.post('/', (req, res) => {
     })
     
 })
+
+function formatData(data) {
+    for (var i=0; i < data['list'].length; i++) {
+                  
+        var day = retrieveDay(data['list'][i]['dt']);
+        data['list'][i]['day'] = day;
+        var icon = retrieveWeatherIcon(data['list'][i]['weather'][0]['main']);
+        data['list'][i]['icon'] = icon
+        data['list'][i]['dt'] = convertUnixTimeStamp(data['list'][i]['dt'], '');
+        data['list'][i]['deg'] = degreeToText(data['list'][i]['deg']);
+        data['list'][i]['sunrise'] = convertUnixTimeStamp(data['list'][i]['sunrise'], 'hours');
+        data['list'][i]['sunset'] = convertUnixTimeStamp(data['list'][i]['sunset'], 'hours');
+    }
+
+    return data
+}
+
+
+function getCurrentDate() {
+    var today = new Date();
+    var date = (today.getMonth()+1)+'/'+today.getDate()+'/'+today.getFullYear();
+    return date
+}
 
 // this function takes the timestamps output by the weather
 // api and converts them to readable dates
